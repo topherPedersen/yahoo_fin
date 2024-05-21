@@ -7,4 +7,4 @@ try:
     print("success?")
     # print(company_info)
 except Exception as error:
-    print("Error in get_company_info for " + ticker + ":" + str(error))
+    print("Error in get_company_info: " + str(error))
