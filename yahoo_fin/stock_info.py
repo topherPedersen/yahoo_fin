@@ -444,18 +444,10 @@ def _decrypt_yblob_aes(data):
     return decoded_stores
 
 def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
-
     html = requests.get(url=url, headers = headers).text
-
-    print("_parse_json...")
-    print("print(html)...")
-    print("")
-    print(html)
-    print("")
 
     soup = BeautifulSoup(html, "html.parser")
 
-    # soup.find_all('a')
     json_str = '{}'
 
     script_tags = soup.find_all('script')
@@ -467,20 +459,28 @@ def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
 
     # json_str = html.split('root.App.main =')[1].split('(this)')[0].split(';\n}')[0].strip()
 
+    # try:
+    #     data = json.loads(json_str)
+    #     #print("type of json_str :", type(data))
+    #     unencrypted_stores = _decrypt_yblob_aes(data)
+    #     json_info = unencrypted_stores['QuoteSummaryStore']
+    #     #print("json_info :", json_info)
+    # except:
+    #     return '{}'
+    # #else:
+    #     # return data
+    #     #new_data = json.dumps(data).replace('{}', 'null')
+    #     #new_data = re.sub(r'\{[\'|\"]raw[\'|\"]:(.*?),(.*?)\}', r'\1', new_data)
+    #     #json_info = json.loads(new_data)
+    #     #print("json info :", json_info)
+    # return json_info
+
     try:
         data = json.loads(json_str)
-        #print("type of json_str :", type(data))
-        unencrypted_stores = _decrypt_yblob_aes(data)
-        json_info = unencrypted_stores['QuoteSummaryStore']
-        #print("json_info :", json_info)
+        json_info = data
     except:
         return '{}'
-    #else:
-        # return data
-        #new_data = json.dumps(data).replace('{}', 'null')
-        #new_data = re.sub(r'\{[\'|\"]raw[\'|\"]:(.*?),(.*?)\}', r'\1', new_data)
-        #json_info = json.loads(new_data)
-        #print("json info :", json_info)
+
     return json_info
 
 
