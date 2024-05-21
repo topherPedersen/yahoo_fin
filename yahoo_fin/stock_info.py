@@ -446,6 +446,13 @@ def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
 
     html = requests.get(url=url, headers = headers).text
 
+    print("_parse_json...")
+    print("print(html)...")
+    print("")
+    print(html)
+    print("")
+    return {}  # TODO: Remove this line! Added for now just so it stops crashing
+
     json_str = html.split('root.App.main =')[1].split('(this)')[0].split(';\n}')[0].strip()
 
     try:
@@ -1102,8 +1109,17 @@ def get_company_info(ticker):
 
        @param: ticker
     '''
+
     site = f"https://finance.yahoo.com/quote/{ticker}/profile?p={ticker}"
     json_info = _parse_json(site)
+
+    # print("")
+    # print("json_info...")
+    # print(json_info)
+    # print("")
+
+    # return False
+
     json_info = json_info["assetProfile"]
     info_frame = pd.DataFrame.from_dict(json_info,
                                         orient="index",
