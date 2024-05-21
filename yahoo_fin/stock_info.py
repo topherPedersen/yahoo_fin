@@ -454,8 +454,8 @@ def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
     for script_tag in script_tags:
         data_url = script_tag.get('data-url')
         if data_url and "quoteSummary" in data_url:
-            json_str = script_tag.contents  # Does this work???
-            print(json_str)
+            if script_tag.contents is not None and len(script_tag.contents):
+                json_str = script_tag.contents[0]  # Does this work???
 
     # json_str = html.split('root.App.main =')[1].split('(this)')[0].split(';\n}')[0].strip()
 
