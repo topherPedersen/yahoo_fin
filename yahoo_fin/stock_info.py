@@ -13,6 +13,7 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 # For pretty print
 from pprint import pp
+from bs4 import BeautifulSoup
 
 
 try:
@@ -451,9 +452,20 @@ def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
     print("")
     print(html)
     print("")
-    return {}  # TODO: Remove this line! Added for now just so it stops crashing
 
-    json_str = html.split('root.App.main =')[1].split('(this)')[0].split(';\n}')[0].strip()
+    soup = BeautifulSoup(html, "html.parser")
+
+    # soup.find_all('a')
+    json_str = '{}'
+
+    script_tags = soup.find_all('script')
+    for script_tag in script_tags:
+        data_url = script_tag.get('data-url')
+        if data_url and "quoteSummary" in data_url:
+            json_str = script_tag.contents  # Does this work???
+            print(json_str)
+
+    # json_str = html.split('root.App.main =')[1].split('(this)')[0].split(';\n}')[0].strip()
 
     try:
         data = json.loads(json_str)
