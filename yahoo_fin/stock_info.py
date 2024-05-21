@@ -483,7 +483,7 @@ def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
         return '{}'
 
     # TODO: Add error try/except here in case there's an error
-    body_json = json.loads(json_info.body)
+    body_json = json.loads(json_info["body"])
     result = body_json["quoteSummary"]["result"][0]
 
     return result
