@@ -478,6 +478,7 @@ def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
         data = json.loads(json_str)
         json_info = data
     except:
+        print("WARNING: json.loads failed")
         return '{}'
 
     return json_info
