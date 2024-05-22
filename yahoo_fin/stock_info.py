@@ -468,13 +468,13 @@ def _old_parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
 def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
     html = requests.get(url=url, headers = headers).text
 
-    print("")
-    print("")
-    print("")
-    print(html)
-    print("")
-    print("")
-    print("")
+    # print("")
+    # print("")
+    # print("")
+    # print(html)
+    # print("")
+    # print("")
+    # print("")
 
     soup = BeautifulSoup(html, "html.parser")
 
@@ -520,6 +520,40 @@ def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
 
     # return json_info
 
+def _parse_html_for_income_statement(url, headers = {'User-agent': 'Mozilla/5.0'}):
+    html = requests.get(url=url, headers = headers).text
+
+    # print("")
+    # print("")
+    # print("")
+    # print(html)
+    # print("")
+    # print("")
+    # print("")
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    json_str = '{}'
+
+    script_tags = soup.find_all('script')
+    for script_tag in script_tags:
+        data_url = script_tag.get('data-url')
+        if data_url and "/fundamentals-timeseries" in data_url:
+            if script_tag.contents is not None and len(script_tag.contents):
+                json_str = script_tag.contents[0]  # Does this work???
+
+    try:
+        data = json.loads(json_str)
+        json_info = data
+    except:
+        print("WARNING: json.loads failed")
+        return '{}'
+
+    # TODO: Add error try/except here in case there's an error
+    body_json = json.loads(json_info["body"])
+    result = body_json["timeseries"]["result"][0]
+
+    return result
 
 def _parse_table(json_info):
 
@@ -549,8 +583,8 @@ def get_income_statement(ticker, yearly = True):
     income_site = "https://finance.yahoo.com/quote/" + ticker + \
             "/financials?p=" + ticker
 
-    json_info = _parse_json(income_site)
-    # json_info = _old_parse_json(income_site)
+    # json_info = _parse_json(income_site)
+    json_info = _parse_html_for_income_statement(income_site)
 
     try:
         if yearly:
