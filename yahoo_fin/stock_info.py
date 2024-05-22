@@ -566,6 +566,7 @@ def _parse_table(json_info):
     del df["maxAge"]
 
     df.set_index("endDate", inplace=True)
+    print("df.index: " + str(df.index))
     df.index = pd.to_datetime(df.index, unit="s")
  
     df = df.transpose()
