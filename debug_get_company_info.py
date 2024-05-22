@@ -5,8 +5,8 @@ import yahoo_fin.stock_info as si
 try:
     data = si.get_income_statement('MSFT')
     # print(data)
-    # for index, row in data.iterrows():
-    #     print(row)
+    for index, row in data.iterrows():
+        print(row)
 except Exception as error:
     print("Error: " + str(error))
 

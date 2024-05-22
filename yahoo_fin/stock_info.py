@@ -538,7 +538,7 @@ def _parse_html_for_income_statement(url, headers = {'User-agent': 'Mozilla/5.0'
     script_tags = soup.find_all('script')
     for script_tag in script_tags:
         data_url = script_tag.get('data-url')
-        if data_url and "/fundamentals-timeseries" in data_url:
+        if data_url and "quoteSummary" in data_url:
             if script_tag.contents is not None and len(script_tag.contents):
                 json_str = script_tag.contents[0]  # Does this work???
 
@@ -551,7 +551,8 @@ def _parse_html_for_income_statement(url, headers = {'User-agent': 'Mozilla/5.0'
 
     # TODO: Add error try/except here in case there's an error
     body_json = json.loads(json_info["body"])
-    result = body_json["timeseries"]["result"][0]
+    # result = body_json["timeseries"]["result"][0]
+    result = body_json["quoteSummary"]["result"][0]
 
     return result
 
@@ -591,7 +592,8 @@ def get_income_statement(ticker, yearly = True):
             temp = json_info["incomeStatementHistory"]["incomeStatementHistory"]
         else:
             temp = json_info["incomeStatementHistoryQuarterly"]["incomeStatementHistory"]
-    except:
+    except Exception as e:
+        print("Exception in get_income_statement: " + str(e))
         temp = []
     
     return _parse_table(temp)      
