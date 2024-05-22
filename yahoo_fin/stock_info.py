@@ -468,6 +468,14 @@ def _old_parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
 def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
     html = requests.get(url=url, headers = headers).text
 
+    print("")
+    print("")
+    print("")
+    print(html)
+    print("")
+    print("")
+    print("")
+
     soup = BeautifulSoup(html, "html.parser")
 
     json_str = '{}'
