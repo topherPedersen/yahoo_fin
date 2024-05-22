@@ -541,7 +541,8 @@ def get_income_statement(ticker, yearly = True):
     income_site = "https://finance.yahoo.com/quote/" + ticker + \
             "/financials?p=" + ticker
 
-    json_info = _parse_json(income_site)
+    # json_info = _parse_json(income_site)
+    json_info = _old_parse_json(income_site)
     try:
         if yearly:
             temp = json_info["incomeStatementHistory"]["incomeStatementHistory"]
@@ -564,7 +565,8 @@ def get_balance_sheet(ticker, yearly = True):
                          "/balance-sheet?p=" + ticker
     
 
-    json_info = _parse_json(balance_sheet_site)
+    # json_info = _parse_json(balance_sheet_site)
+    json_info = _old_parse_json(balance_sheet_site)
     
     try:
         if yearly:
@@ -588,7 +590,8 @@ def get_cash_flow(ticker, yearly = True):
             ticker + "/cash-flow?p=" + ticker
     
     
-    json_info = _parse_json(cash_flow_site)
+    # json_info = _parse_json(cash_flow_site)
+    json_info = _old_parse_json(cash_flow_site)
     
     if yearly:
         temp = json_info["cashflowStatementHistory"]["cashflowStatements"]
@@ -615,7 +618,8 @@ def get_financials(ticker, yearly = True, quarterly = True):
     financials_site = "https://finance.yahoo.com/quote/" + ticker + \
             "/financials?p=" + ticker
             
-    json_info = _parse_json(financials_site)
+    # json_info = _parse_json(financials_site)
+    json_info = _old_parse_json(financials_site)
     
     result = {}
     
