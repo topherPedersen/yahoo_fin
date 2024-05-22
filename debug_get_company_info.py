@@ -2,41 +2,41 @@
 # https://theautomatic.net/yahoo_fin-documentation/#get_company_info
 import yahoo_fin.stock_info as si
 
-try:
-    data = si.get_income_statement('MSFT')
-    print(data)
-    # for index, row in data.iterrows():
-    #     print(row)
-except Exception as error:
-    print("Error: " + str(error))
+# try:
+#     data = si.get_income_statement('MSFT')
+#     # print(data)
+#     # for index, row in data.iterrows():
+#     #     print(row)
+# except Exception as error:
+#     print("Error: " + str(error))
 
-try:
-    data = si.get_balance_sheet('MSFT')
-    print(data)
-    # for index, row in data.iterrows():
-    #     print(row)
-except Exception as error:
-    print("Error: " + str(error))
+# try:
+#     data = si.get_balance_sheet('MSFT')
+#     # print(data)
+#     # for index, row in data.iterrows():
+#     #     print(row)
+# except Exception as error:
+#     print("Error: " + str(error))
 
-try:
-    data = si.get_cash_flow('MSFT')
-    print(data)
-    # for index, row in data.iterrows():
-    #     print(row)
-except Exception as error:
-    print("Error: " + str(error))
+# try:
+#     data = si.get_cash_flow('MSFT')
+#     # print(data)
+#     # for index, row in data.iterrows():
+#     #     print(row)
+# except Exception as error:
+#     print("Error: " + str(error))
 
-try:
-    data = si.get_financials('MSFT')
-    print(data)
-    # for index, row in data.iterrows():
-    #     print(row)
-except Exception as error:
-    print("Error: " + str(error))
+# try:
+#     data = si.get_financials('MSFT')
+#     # print(data)
+#     # for index, row in data.iterrows():
+#     #     print(row)
+# except Exception as error:
+#     print("Error: " + str(error))
 
 try:
     data = si.get_earnings('MSFT')
-    print(data)
+    # print(data)
     # for index, row in data.iterrows():
     #     print(row)
 except Exception as error:
@@ -44,7 +44,7 @@ except Exception as error:
 
 try:
     company_info = si.get_company_info('MSFT')
-    print(company_info)
+    # print(company_info)
     # for index, row in company_info.iterrows():
     #     print(row)
 except Exception as error:
@@ -52,7 +52,7 @@ except Exception as error:
 
 try:
     data = si.get_company_officers('MSFT')
-    print(data)
+    # print(data)
     # for index, row in data.iterrows():
     #     print(row)
 except Exception as error:
