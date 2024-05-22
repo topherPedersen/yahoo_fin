@@ -897,7 +897,8 @@ def get_earnings(ticker):
     
     result["quarterly_revenue_earnings"] = pd.DataFrame.from_dict(temp["financialsChart"]["quarterly"])
     
-    return (pp(result))
+    # return (pp(result))
+    return result
 
 
 
