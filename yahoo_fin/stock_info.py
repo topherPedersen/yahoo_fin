@@ -556,28 +556,19 @@ def _parse_html_for_income_statement(url, headers = {'User-agent': 'Mozilla/5.0'
 
     return result
 
+
 def _parse_table(json_info):
     df = pd.DataFrame(json_info)
-
-    # print("(df[endDate][0][raw]" + str(df["endDate"][0]["raw"]))
-    # s = int(df["endDate"][0]["raw"])
-    # print("s: " + str(s))
-    df["rawEndDate"] = df["endDate"][0]["raw"]
 
     if df.empty:
         return df
     
     del df["maxAge"]
 
-    # df.set_index("endDate", inplace=True)
-    # df.index = pd.to_datetime(df.index, unit="s")
-    # df.index = pd.to_datetime(s, unit="s")
-    # df.index = s
+    df["rawEndDate"] = df["endDate"][0]["raw"]
 
     df.set_index("rawEndDate", inplace=True)
     df.index = pd.to_datetime(df.index, unit="s")
-    # df.index = pd.to_datetime(s, unit="s")
-    # df.index = s
  
     df = df.transpose()
     df.index.name = "Breakdown"
