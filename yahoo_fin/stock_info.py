@@ -13,6 +13,7 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 # For pretty print
 from pprint import pp
+from bs4 import BeautifulSoup
 
 
 try:
@@ -446,37 +447,40 @@ def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
 
     html = requests.get(url=url, headers = headers).text
 
-    json_str = html.split('root.App.main =')[1].split('(this)')[0].split(';\n}')[0].strip()
+    json_str = '{}'
+
+    soup = BeautifulSoup(html, "html.parser")
+    script_tags = soup.find_all('script')
+    for script_tag in script_tags:
+        data_url = script_tag.get('data-url')
+        if data_url and "quoteSummary" in data_url:
+            if script_tag.contents is not None and len(script_tag.contents):
+                json_str = script_tag.contents[0]
 
     try:
         data = json.loads(json_str)
-        #print("type of json_str :", type(data))
-        unencrypted_stores = _decrypt_yblob_aes(data)
-        json_info = unencrypted_stores['QuoteSummaryStore']
-        #print("json_info :", json_info)
+        json_info = data
+        body_json = json.loads(json_info["body"])
+        result = body_json["quoteSummary"]["result"][0]
     except:
         return '{}'
-    #else:
-        # return data
-        #new_data = json.dumps(data).replace('{}', 'null')
-        #new_data = re.sub(r'\{[\'|\"]raw[\'|\"]:(.*?),(.*?)\}', r'\1', new_data)
-        #json_info = json.loads(new_data)
-        #print("json info :", json_info)
-    return json_info
+
+    return result
 
 
 def _parse_table(json_info):
-
     df = pd.DataFrame(json_info)
-    
+
     if df.empty:
         return df
-    
+
     del df["maxAge"]
 
-    df.set_index("endDate", inplace=True)
+    df["rawEndDate"] = df["endDate"][0]["raw"]
+
+    df.set_index("rawEndDate", inplace=True)
     df.index = pd.to_datetime(df.index, unit="s")
- 
+
     df = df.transpose()
     df.index.name = "Breakdown"
 
