@@ -443,6 +443,28 @@ def _decrypt_yblob_aes(data):
     decoded_stores = json.loads(plaintext)
     return decoded_stores
 
+def _old_parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
+
+    html = requests.get(url=url, headers = headers).text
+
+    json_str = html.split('root.App.main =')[1].split('(this)')[0].split(';\n}')[0].strip()
+
+    try:
+        data = json.loads(json_str)
+        #print("type of json_str :", type(data))
+        unencrypted_stores = _decrypt_yblob_aes(data)
+        json_info = unencrypted_stores['QuoteSummaryStore']
+        #print("json_info :", json_info)
+    except:
+        return '{}'
+    #else:
+        # return data
+        #new_data = json.dumps(data).replace('{}', 'null')
+        #new_data = re.sub(r'\{[\'|\"]raw[\'|\"]:(.*?),(.*?)\}', r'\1', new_data)
+        #json_info = json.loads(new_data)
+        #print("json info :", json_info)
+    return json_info
+
 def _parse_json(url, headers = {'User-agent': 'Mozilla/5.0'}):
     html = requests.get(url=url, headers = headers).text
 
