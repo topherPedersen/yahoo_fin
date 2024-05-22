@@ -42,15 +42,15 @@ try:
 except Exception as error:
     print("Error: " + str(error))
 
-try:
-    print("get_earnings...")
-    data = si.get_earnings('MSFT')
-    print("finished getting earnings")
-    # print(data)
-    # for index, row in data.iterrows():
-    #     print(row)
-except Exception as error:
-    print("Error: " + str(error))
+# try:
+#     print("get_earnings...")
+#     data = si.get_earnings('MSFT')
+#     print("finished getting earnings")
+#     # print(data)
+#     # for index, row in data.iterrows():
+#     #     print(row)
+# except Exception as error:
+#     print("Error: " + str(error))
 
 try:
     print("get_company_info...")
